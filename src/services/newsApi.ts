@@ -10,12 +10,13 @@ const api = axios.create({
 });
 
 export class NewsApiService {
-  static async getTopHeadlines(country: string = 'us', pageSize: number = 20): Promise<NewsResponse> {
+  static async getTopHeadlines(country: string = 'us', pageSize: number = 20, page: number = 1): Promise<NewsResponse> {
     try {
       const response = await api.get('/top-headlines', {
         params: {
           country,
           pageSize,
+          page,
         },
       });
       return response.data;
