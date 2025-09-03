@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, Linking, Share, Alert } from 'react-native';
-import { Menu, IconButton } from 'react-native-paper';
+import { View, Text, Image, TouchableOpacity, StyleSheet, Linking, Share, Alert, Modal } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import * as Clipboard from 'expo-clipboard';
-import { useTheme } from '../contexts/ThemeContext';
-import { NewsArticle } from '../types';
+import { NewsArticle, RootStackParamList } from '../types';
+
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 interface NewsCardProps {
   article: NewsArticle;
 }
 
 const NewsCard: React.FC<NewsCardProps> = ({ article }) => {
-  const { theme } = useTheme();
+  const navigation = useNavigation<NavigationProp>();
   const [menuVisible, setMenuVisible] = useState(false);
 
   const handlePress = () => {
-    Linking.openURL(article.url);
+    navigation.navigate('NewsDetail', { article });
   };
 
   const handleShare = async () => {
@@ -62,12 +64,12 @@ const NewsCard: React.FC<NewsCardProps> = ({ article }) => {
 
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: theme.colors.surface,
+      backgroundColor: '#FFFFFF',
       borderRadius: 12,
       marginVertical: 8,
       marginHorizontal: 16,
       elevation: 3,
-      shadowColor: theme.colors.text,
+      shadowColor: '#000000',
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.1,
       shadowRadius: 4,
@@ -84,13 +86,13 @@ const NewsCard: React.FC<NewsCardProps> = ({ article }) => {
     title: {
       fontSize: 18,
       fontWeight: 'bold',
-      color: theme.colors.text,
+      color: '#2C2C2C',
       marginBottom: 8,
       lineHeight: 24,
     },
     description: {
       fontSize: 14,
-      color: theme.colors.onSurface,
+      color: '#2C2C2C',
       marginBottom: 12,
       lineHeight: 20,
     },
@@ -107,16 +109,16 @@ const NewsCard: React.FC<NewsCardProps> = ({ article }) => {
     },
     date: {
       fontSize: 12,
-      color: theme.colors.disabled,
+      color: '#8C8E90',
     },
     separator: {
       fontSize: 12,
-      color: theme.colors.disabled,
+      color: '#8C8E90',
       marginHorizontal: 8,
     },
     source: {
       fontSize: 12,
-      color: theme.colors.primary,
+      color: '#EB455B',
       fontWeight: '600',
     },
     menuButton: {
@@ -127,22 +129,48 @@ const NewsCard: React.FC<NewsCardProps> = ({ article }) => {
     },
     menuIcon: {
       fontSize: 16,
-      color: theme.colors.onSurface,
+      color: '#2C2C2C',
       fontWeight: 'bold',
       lineHeight: 16,
     },
     placeholderImage: {
       width: '100%',
       height: 200,
-      backgroundColor: theme.colors.disabled,
+      backgroundColor: '#8C8E90',
       borderTopLeftRadius: 12,
       borderTopRightRadius: 12,
       justifyContent: 'center',
       alignItems: 'center',
     },
     placeholderText: {
-      color: theme.colors.background,
+      color: '#FFFFFF',
       fontSize: 16,
+    },
+    modalOverlay: {
+      flex: 1,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    menuModal: {
+      backgroundColor: '#FFFFFF',
+      borderRadius: 8,
+      minWidth: 200,
+      elevation: 5,
+      shadowColor: '#000000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+    },
+    menuItem: {
+      paddingVertical: 12,
+      paddingHorizontal: 16,
+      borderBottomWidth: 1,
+      borderBottomColor: '#F0F0F0',
+    },
+    menuItemText: {
+      fontSize: 16,
+      color: '#2C2C2C',
     },
   });
 
@@ -181,31 +209,37 @@ const NewsCard: React.FC<NewsCardProps> = ({ article }) => {
               {article.source.name}
             </Text>
           </View>
-          <Menu
-            visible={menuVisible}
-            onDismiss={() => setMenuVisible(false)}
-            anchor={
-              <TouchableOpacity 
-                onPress={() => setMenuVisible(true)}
-                style={styles.menuButton}
-              >
-                <Text style={styles.menuIcon}>⋮</Text>
-              </TouchableOpacity>
-            }
+          <TouchableOpacity 
+            onPress={() => setMenuVisible(true)}
+            style={styles.menuButton}
           >
-            <Menu.Item
-              onPress={handleShare}
-              title="📤 Compartilhar"
-            />
-            <Menu.Item
-              onPress={handleCopyLink}
-              title="📋 Copiar link"
-            />
-            <Menu.Item
-              onPress={handleOpenExternal}
-              title="🔗 Abrir no navegador"
-            />
-          </Menu>
+            <Text style={styles.menuIcon}>⋮</Text>
+          </TouchableOpacity>
+          
+          <Modal
+            visible={menuVisible}
+            transparent={true}
+            animationType="fade"
+            onRequestClose={() => setMenuVisible(false)}
+          >
+            <TouchableOpacity 
+              style={styles.modalOverlay}
+              activeOpacity={1}
+              onPress={() => setMenuVisible(false)}
+            >
+              <View style={styles.menuModal}>
+                <TouchableOpacity style={styles.menuItem} onPress={handleShare}>
+                  <Text style={styles.menuItemText}>📤 Compartilhar</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.menuItem} onPress={handleCopyLink}>
+                  <Text style={styles.menuItemText}>📋 Copiar link</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.menuItem} onPress={handleOpenExternal}>
+                  <Text style={styles.menuItemText}>🔗 Abrir no navegador</Text>
+                </TouchableOpacity>
+              </View>
+            </TouchableOpacity>
+          </Modal>
         </View>
       </View>
     </TouchableOpacity>

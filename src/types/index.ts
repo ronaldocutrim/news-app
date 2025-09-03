@@ -49,6 +49,7 @@ export interface Theme {
 
 export type RootStackParamList = {
   TabNavigator: undefined;
+  NewsDetail: { article: NewsArticle };
 };
 
 export type TabParamList = {

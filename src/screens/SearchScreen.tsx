@@ -5,22 +5,16 @@ import {
   StyleSheet, 
   ActivityIndicator, 
   ScrollView,
-  TouchableOpacity 
+  TouchableOpacity,
+  Text,
+  TextInput
 } from 'react-native';
-import { 
-  Text, 
-  TextInput, 
-  Button,
-  Chip 
-} from 'react-native-paper';
 import { useDebounce } from '@uidotdev/usehooks';
-import { useTheme } from '../contexts/ThemeContext';
 import { useSearchNews } from '../viewmodels/useSearchNews';
 import NewsCard from '../components/NewsCard';
 import { SearchFilters, NewsArticle } from '../types';
 
 const SearchScreen: React.FC = () => {
-  const { theme } = useTheme();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSort, setSelectedSort] = useState<'publishedAt' | 'relevancy' | 'popularity'>('publishedAt');
   
@@ -34,7 +28,7 @@ const SearchScreen: React.FC = () => {
   ];
 
   const filters: SearchFilters = {
-    q: debouncedSearchQuery || 'news', // Use debounced query or 'news' as default
+    q: debouncedSearchQuery || 'news',
     sortBy: selectedSort,
     pageSize: 20,
     page: 1,
@@ -42,7 +36,7 @@ const SearchScreen: React.FC = () => {
 
   const { data, isLoading, error, refetch } = useSearchNews(
     filters,
-    true // Always enabled to show initial data
+    true
   );
 
   const handleSortChange = useCallback((sortBy: 'publishedAt' | 'relevancy' | 'popularity') => {
@@ -54,28 +48,27 @@ const SearchScreen: React.FC = () => {
   );
 
   const renderSortOption = ({ item }: { item: typeof sortOptions[0] }) => (
-    <Chip
-      selected={selectedSort === item.key}
-      onPress={() => handleSortChange(item.key as 'publishedAt' | 'relevancy' | 'popularity')}
+    <TouchableOpacity
       style={[
         styles.sortChip,
         selectedSort === item.key && styles.selectedChip
       ]}
-      textStyle={[
+      onPress={() => handleSortChange(item.key as 'publishedAt' | 'relevancy' | 'popularity')}
+    >
+      <Text style={[
         styles.chipText,
         selectedSort === item.key && styles.selectedChipText
-      ]}
-      mode={selectedSort === item.key ? 'flat' : 'outlined'}
-    >
-      {item.label}
-    </Chip>
+      ]}>
+        {item.label}
+      </Text>
+    </TouchableOpacity>
   );
 
   const renderContent = () => {
     if (isLoading && !data) {
       return (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color={theme.colors.primary} />
+          <ActivityIndicator size="large" color="#EB455B" />
           <Text style={styles.loadingText}>
             Carregando notícias...
           </Text>
@@ -135,20 +128,27 @@ const SearchScreen: React.FC = () => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: theme.colors.background,
+      backgroundColor: '#F3F0F0',
     },
     searchContainer: {
-      backgroundColor: theme.colors.surface,
+      backgroundColor: '#FFFFFF',
       padding: 16,
       elevation: 2,
-      shadowColor: theme.colors.text,
+      shadowColor: '#000000',
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.1,
       shadowRadius: 4,
     },
     searchInput: {
-      backgroundColor: theme.colors.background,
+      backgroundColor: '#F3F0F0',
       marginBottom: 16,
+      borderRadius: 8,
+      paddingHorizontal: 16,
+      paddingVertical: 12,
+      fontSize: 16,
+      color: '#2C2C2C',
+      borderWidth: 1,
+      borderColor: '#8C8E90',
     },
     filtersContainer: {
       marginBottom: 8,
@@ -156,7 +156,7 @@ const SearchScreen: React.FC = () => {
     filtersLabel: {
       fontSize: 14,
       fontWeight: '600',
-      color: theme.colors.text,
+      color: '#2C2C2C',
       marginBottom: 8,
     },
     sortContainer: {
@@ -164,17 +164,22 @@ const SearchScreen: React.FC = () => {
     },
     sortChip: {
       marginRight: 8,
-      borderColor: theme.colors.primary,
+      paddingHorizontal: 16,
+      paddingVertical: 8,
+      borderRadius: 20,
+      borderWidth: 1,
+      borderColor: '#EB455B',
+      backgroundColor: '#FFFFFF',
     },
     selectedChip: {
-      backgroundColor: theme.colors.primary,
+      backgroundColor: '#EB455B',
     },
     chipText: {
-      color: theme.colors.text,
+      color: '#2C2C2C',
       fontSize: 14,
     },
     selectedChipText: {
-      color: theme.colors.background,
+      color: '#FFFFFF',
       fontWeight: '600',
     },
     contentContainer: {
@@ -187,7 +192,7 @@ const SearchScreen: React.FC = () => {
       padding: 20,
     },
     loadingText: {
-      color: theme.colors.text,
+      color: '#2C2C2C',
       marginTop: 16,
       fontSize: 16,
     },
@@ -198,14 +203,14 @@ const SearchScreen: React.FC = () => {
       padding: 20,
     },
     errorText: {
-      color: theme.colors.error,
+      color: '#EB455B',
       textAlign: 'center',
       fontSize: 16,
       marginBottom: 16,
       lineHeight: 24,
     },
     retryText: {
-      color: theme.colors.primary,
+      color: '#EB455B',
       fontSize: 16,
       fontWeight: 'bold',
     },
@@ -216,16 +221,16 @@ const SearchScreen: React.FC = () => {
       padding: 20,
     },
     emptyText: {
-      color: theme.colors.onSurface,
+      color: '#2C2C2C',
       textAlign: 'center',
       fontSize: 16,
       lineHeight: 24,
     },
     resultCount: {
       padding: 16,
-      color: theme.colors.onSurface,
+      color: '#2C2C2C',
       fontSize: 14,
-      backgroundColor: theme.colors.surface,
+      backgroundColor: '#FFFFFF',
       textAlign: 'center',
     },
     listContent: {
@@ -242,20 +247,8 @@ const SearchScreen: React.FC = () => {
           value={searchQuery}
           onChangeText={setSearchQuery}
           placeholder="Digite para buscar notícias em tempo real..."
-          mode="outlined"
           returnKeyType="search"
-          right={
-            searchQuery !== debouncedSearchQuery ? (
-              <TextInput.Icon 
-                icon={() => (
-                  <ActivityIndicator 
-                    size={20} 
-                    color={theme.colors.primary} 
-                  />
-                )}
-              />
-            ) : null
-          }
+          placeholderTextColor="#8C8E90"
         />
 
         {/* Sort Filters */}

@@ -1,19 +1,16 @@
 import React from 'react';
-import { View, FlatList, RefreshControl, StyleSheet, ActivityIndicator } from 'react-native';
-import { Text } from 'react-native-paper';
-import { useTheme } from '../contexts/ThemeContext';
+import { View, FlatList, RefreshControl, StyleSheet, ActivityIndicator, Text } from 'react-native';
 import { useTopNews } from '../viewmodels/useTopNews';
 import NewsCard from '../components/NewsCard';
 import { NewsArticle } from '../types';
 
 const TopNewsScreen: React.FC = () => {
-  const { theme } = useTheme();
   const { data, isLoading, error, refetch, isRefetching } = useTopNews();
 
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: theme.colors.background,
+      backgroundColor: '#F3F0F0',
     },
     loadingContainer: {
       flex: 1,
@@ -27,13 +24,13 @@ const TopNewsScreen: React.FC = () => {
       padding: 20,
     },
     errorText: {
-      color: theme.colors.error,
+      color: '#EB455B',
       textAlign: 'center',
       fontSize: 16,
       marginBottom: 16,
     },
     retryText: {
-      color: theme.colors.primary,
+      color: '#EB455B',
       fontSize: 16,
       fontWeight: 'bold',
     },
@@ -44,7 +41,7 @@ const TopNewsScreen: React.FC = () => {
       padding: 20,
     },
     emptyText: {
-      color: theme.colors.onSurface,
+      color: '#2C2C2C',
       textAlign: 'center',
       fontSize: 16,
     },
@@ -53,8 +50,8 @@ const TopNewsScreen: React.FC = () => {
   if (isLoading && !data) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color={theme.colors.primary} />
-        <Text style={{ color: theme.colors.text, marginTop: 16 }}>
+        <ActivityIndicator size="large" color="#EB455B" />
+        <Text style={{ color: '#2C2C2C', marginTop: 16 }}>
           Carregando notícias...
         </Text>
       </View>
@@ -102,8 +99,8 @@ const TopNewsScreen: React.FC = () => {
           <RefreshControl
             refreshing={isRefetching}
             onRefresh={refetch}
-            colors={[theme.colors.primary]}
-            tintColor={theme.colors.primary}
+            colors={['#EB455B']}
+            tintColor="#EB455B"
           />
         }
         showsVerticalScrollIndicator={false}

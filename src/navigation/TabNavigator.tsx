@@ -1,7 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import { useTheme } from '../contexts/ThemeContext';
 import { TabParamList } from '../types';
 import TopNewsScreen from '../screens/TopNewsScreen';
 import SearchScreen from '../screens/SearchScreen';
@@ -9,48 +8,51 @@ import SearchScreen from '../screens/SearchScreen';
 const Tab = createBottomTabNavigator<TabParamList>();
 
 const TabNavigator: React.FC = () => {
-  const { theme } = useTheme();
-
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName: keyof typeof Ionicons.glyphMap;
-
-          if (route.name === 'TopNews') {
-            iconName = focused ? 'newspaper' : 'newspaper-outline';
-          } else if (route.name === 'Search') {
-            iconName = focused ? 'search' : 'search-outline';
-          } else {
-            iconName = 'help-outline';
-          }
-
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
-        tabBarActiveTintColor: theme.colors.primary,
-        tabBarInactiveTintColor: theme.colors.disabled,
+      screenOptions={{
+        tabBarActiveTintColor: '#EB455B',
+        tabBarInactiveTintColor: '#8C8E90',
         tabBarStyle: {
-          backgroundColor: theme.colors.surface,
-          borderTopColor: theme.colors.disabled,
+          backgroundColor: '#FFFFFF',
+          borderTopColor: '#8C8E90',
         },
         headerStyle: {
-          backgroundColor: theme.colors.surface,
+          backgroundColor: '#FFFFFF',
         },
-        headerTintColor: theme.colors.text,
+        headerTintColor: '#2C2C2C',
         headerTitleStyle: {
           fontWeight: 'bold',
         },
-      })}
+      }}
     >
       <Tab.Screen 
         name="TopNews" 
         component={TopNewsScreen}
-        options={{ title: 'Top Notícias' }}
+        options={{ 
+          title: 'Top Notícias',
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons 
+              name={focused ? 'newspaper' : 'newspaper-outline'} 
+              size={size} 
+              color={color} 
+            />
+          )
+        }}
       />
       <Tab.Screen 
         name="Search" 
         component={SearchScreen}
-        options={{ title: 'Buscar' }}
+        options={{ 
+          title: 'Buscar',
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons 
+              name={focused ? 'search' : 'search-outline'} 
+              size={size} 
+              color={color} 
+            />
+          )
+        }}
       />
     </Tab.Navigator>
   );
