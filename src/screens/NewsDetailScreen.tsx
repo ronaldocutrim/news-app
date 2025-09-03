@@ -53,7 +53,6 @@ const NewsDetailScreen: React.FC = () => {
     },
     scrollContainer: {
       flex: 1,
-      paddingBottom: 100,
     },
     image: {
       width: '100%',
@@ -72,6 +71,7 @@ const NewsDetailScreen: React.FC = () => {
     },
     contentContainer: {
       padding: 20,
+      paddingBottom: 120,
     },
     title: {
       fontSize: 24,
@@ -132,6 +132,7 @@ const NewsDetailScreen: React.FC = () => {
       shadowRadius: 4,
       borderTopWidth: 1,
       borderTopColor: '#F0F0F0',
+      height: 80,
     },
     actionButton: {
       flex: 1,
