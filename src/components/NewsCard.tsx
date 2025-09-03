@@ -81,18 +81,12 @@ const NewsCard: React.FC<NewsCardProps> = ({ article }) => {
     content: {
       padding: 16,
     },
-    header: {
-      flexDirection: 'row',
-      alignItems: 'flex-start',
-      marginBottom: 8,
-    },
     title: {
       fontSize: 18,
       fontWeight: 'bold',
       color: theme.colors.text,
+      marginBottom: 8,
       lineHeight: 24,
-      flex: 1,
-      marginRight: 8,
     },
     description: {
       fontSize: 14,
@@ -106,14 +100,27 @@ const NewsCard: React.FC<NewsCardProps> = ({ article }) => {
       alignItems: 'center',
       marginTop: 8,
     },
+    sourceInfo: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      flex: 1,
+    },
+    date: {
+      fontSize: 12,
+      color: theme.colors.disabled,
+    },
+    separator: {
+      fontSize: 12,
+      color: theme.colors.disabled,
+      marginHorizontal: 8,
+    },
     source: {
       fontSize: 12,
       color: theme.colors.primary,
       fontWeight: '600',
     },
-    date: {
-      fontSize: 12,
-      color: theme.colors.disabled,
+    menuButton: {
+      margin: 0,
     },
     placeholderImage: {
       width: '100%',
@@ -145,19 +152,36 @@ const NewsCard: React.FC<NewsCardProps> = ({ article }) => {
       )}
       
       <View style={styles.content}>
-        <View style={styles.header}>
-          <Text style={styles.title} numberOfLines={3}>
-            {article.title}
+        <Text style={styles.title} numberOfLines={3}>
+          {article.title}
+        </Text>
+        
+        {article.description && (
+          <Text style={styles.description} numberOfLines={3}>
+            {article.description}
           </Text>
+        )}
+        
+        <View style={styles.footer}>
+          <View style={styles.sourceInfo}>
+            <Text style={styles.date}>
+              {formatDate(article.publishedAt)}
+            </Text>
+            <Text style={styles.separator}>•</Text>
+            <Text style={styles.source}>
+              {article.source.name}
+            </Text>
+          </View>
           <Menu
             visible={menuVisible}
             onDismiss={() => setMenuVisible(false)}
             anchor={
               <IconButton
                 icon="dots-vertical"
-                size={20}
+                size={18}
                 onPress={() => setMenuVisible(true)}
                 iconColor={theme.colors.onSurface}
+                style={styles.menuButton}
               />
             }
           >
@@ -177,21 +201,6 @@ const NewsCard: React.FC<NewsCardProps> = ({ article }) => {
               leadingIcon="open-in-new"
             />
           </Menu>
-        </View>
-        
-        {article.description && (
-          <Text style={styles.description} numberOfLines={3}>
-            {article.description}
-          </Text>
-        )}
-        
-        <View style={styles.footer}>
-          <Text style={styles.source}>
-            {article.source.name}
-          </Text>
-          <Text style={styles.date}>
-            {formatDate(article.publishedAt)}
-          </Text>
         </View>
       </View>
     </TouchableOpacity>
