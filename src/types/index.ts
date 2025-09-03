@@ -48,6 +48,7 @@ export interface Theme {
 }
 
 export type RootStackParamList = {
+  Splash: undefined;
   TabNavigator: undefined;
   NewsDetail: { article: NewsArticle };
 };

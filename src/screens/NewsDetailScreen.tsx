@@ -51,37 +51,9 @@ const NewsDetailScreen: React.FC = () => {
       flex: 1,
       backgroundColor: '#F3F0F0',
     },
-    header: {
-      backgroundColor: '#FFFFFF',
-      paddingVertical: 16,
-      paddingHorizontal: 20,
-      flexDirection: 'row',
-      alignItems: 'center',
-      elevation: 2,
-      shadowColor: '#000000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
-    },
-    backButton: {
-      marginRight: 16,
-    },
-    backButtonText: {
-      fontSize: 24,
-      color: '#EB455B',
-    },
-    headerTitle: {
-      fontSize: 18,
-      fontWeight: 'bold',
-      color: '#2C2C2C',
-      flex: 1,
-    },
     scrollContainer: {
       flex: 1,
-    },
-    imageContainer: {
-      backgroundColor: '#FFFFFF',
-      marginBottom: 2,
+      paddingBottom: 100,
     },
     image: {
       width: '100%',
@@ -99,9 +71,7 @@ const NewsDetailScreen: React.FC = () => {
       fontSize: 16,
     },
     contentContainer: {
-      backgroundColor: '#FFFFFF',
       padding: 20,
-      marginBottom: 2,
     },
     title: {
       fontSize: 24,
@@ -112,48 +82,56 @@ const NewsDetailScreen: React.FC = () => {
     },
     metaContainer: {
       flexDirection: 'row',
-      justifyContent: 'space-between',
       alignItems: 'center',
-      marginBottom: 20,
-      paddingBottom: 16,
-      borderBottomWidth: 1,
-      borderBottomColor: '#F0F0F0',
+      marginBottom: 12,
     },
-    metaLeft: {
-      flex: 1,
+    date: {
+      fontSize: 14,
+      color: '#8C8E90',
+    },
+    separator: {
+      fontSize: 14,
+      color: '#8C8E90',
+      marginHorizontal: 8,
     },
     source: {
       fontSize: 14,
       color: '#EB455B',
       fontWeight: '600',
-      marginBottom: 4,
-    },
-    date: {
-      fontSize: 12,
-      color: '#8C8E90',
     },
     author: {
-      fontSize: 12,
+      fontSize: 14,
       color: '#8C8E90',
-      marginTop: 2,
+      marginTop: 8,
     },
     description: {
       fontSize: 16,
       lineHeight: 24,
       color: '#2C2C2C',
-      marginBottom: 20,
+      marginBottom: 16,
     },
     content: {
       fontSize: 16,
       lineHeight: 24,
       color: '#2C2C2C',
-      marginBottom: 30,
+      marginBottom: 20,
     },
     actionsContainer: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
       backgroundColor: '#FFFFFF',
-      padding: 20,
+      padding: 16,
       flexDirection: 'row',
       justifyContent: 'space-around',
+      elevation: 5,
+      shadowColor: '#000000',
+      shadowOffset: { width: 0, height: -2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 4,
+      borderTopWidth: 1,
+      borderTopColor: '#F0F0F0',
     },
     actionButton: {
       flex: 1,
@@ -181,53 +159,39 @@ const NewsDetailScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity 
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-        >
-          <Text style={styles.backButtonText}>←</Text>
-        </TouchableOpacity>
-        <Text style={styles.headerTitle} numberOfLines={1}>
-          Detalhes da Notícia
-        </Text>
-      </View>
-
       <ScrollView style={styles.scrollContainer}>
-        <View style={styles.imageContainer}>
-          {article.urlToImage ? (
-            <Image 
-              source={{ uri: article.urlToImage }} 
-              style={styles.image}
-              resizeMode="cover"
-            />
-          ) : (
-            <View style={styles.placeholderImage}>
-              <Text style={styles.placeholderText}>Sem imagem disponível</Text>
-            </View>
-          )}
-        </View>
-
+        {article.urlToImage ? (
+          <Image 
+            source={{ uri: article.urlToImage }} 
+            style={styles.image}
+            resizeMode="cover"
+          />
+        ) : (
+          <View style={styles.placeholderImage}>
+            <Text style={styles.placeholderText}>Sem imagem</Text>
+          </View>
+        )}
+        
         <View style={styles.contentContainer}>
           <Text style={styles.title}>
             {article.title}
           </Text>
 
           <View style={styles.metaContainer}>
-            <View style={styles.metaLeft}>
-              <Text style={styles.source}>
-                {article.source.name}
-              </Text>
-              <Text style={styles.date}>
-                {formatDate(article.publishedAt)}
-              </Text>
-              {article.author && (
-                <Text style={styles.author}>
-                  Por {article.author}
-                </Text>
-              )}
-            </View>
+            <Text style={styles.date}>
+              {formatDate(article.publishedAt)}
+            </Text>
+            <Text style={styles.separator}>•</Text>
+            <Text style={styles.source}>
+              {article.source.name}
+            </Text>
           </View>
+
+          {article.author && (
+            <Text style={styles.author}>
+              Por {article.author}
+            </Text>
+          )}
 
           {article.description && (
             <Text style={styles.description}>
