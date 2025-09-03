@@ -15,7 +15,7 @@ const queryClient = new QueryClient({
 });
 
 function AppContent() {
-  const { theme, isDark } = useTheme();
+  const { theme } = useTheme();
 
   return (
     <PaperProvider theme={{
@@ -23,7 +23,7 @@ function AppContent() {
       dark: theme.dark,
       roundness: 12,
     }}>
-      <StatusBar style={isDark ? 'light' : 'dark'} />
+      <StatusBar style="dark" />
       <AppNavigator />
     </PaperProvider>
   );

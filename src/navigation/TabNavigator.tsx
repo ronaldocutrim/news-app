@@ -5,7 +5,6 @@ import { useTheme } from '../contexts/ThemeContext';
 import { TabParamList } from '../types';
 import TopNewsScreen from '../screens/TopNewsScreen';
 import SearchScreen from '../screens/SearchScreen';
-import ThemeSwitcher from '../components/ThemeSwitcher';
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
@@ -41,7 +40,6 @@ const TabNavigator: React.FC = () => {
         headerTitleStyle: {
           fontWeight: 'bold',
         },
-        headerRight: () => <ThemeSwitcher />,
       })}
     >
       <Tab.Screen 
