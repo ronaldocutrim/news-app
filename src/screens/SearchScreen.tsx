@@ -1,13 +1,12 @@
 import React, { useState, useCallback } from 'react';
-import { 
-  View, 
-  FlatList, 
-  StyleSheet, 
-  ActivityIndicator, 
-  ScrollView,
+import {
+  View,
+  FlatList,
+  StyleSheet,
+  ActivityIndicator,
   TouchableOpacity,
   Text,
-  TextInput
+  TextInput,
 } from 'react-native';
 import { useDebounce } from '@uidotdev/usehooks';
 import { useSearchNews } from '../viewmodels/useSearchNews';
@@ -16,8 +15,10 @@ import { SearchFilters, NewsArticle } from '../types';
 
 const SearchScreen: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedSort, setSelectedSort] = useState<'publishedAt' | 'relevancy' | 'popularity'>('publishedAt');
-  
+  const [selectedSort, setSelectedSort] = useState<'publishedAt' | 'relevancy' | 'popularity'>(
+    'publishedAt'
+  );
+
   // Debounce search query by 500ms
   const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
@@ -34,31 +35,20 @@ const SearchScreen: React.FC = () => {
     page: 1,
   };
 
-  const { data, isLoading, error, refetch } = useSearchNews(
-    filters,
-    true
-  );
+  const { data, isLoading, error, refetch } = useSearchNews(filters, true);
 
   const handleSortChange = useCallback((sortBy: 'publishedAt' | 'relevancy' | 'popularity') => {
     setSelectedSort(sortBy);
   }, []);
 
-  const renderNewsItem = ({ item }: { item: NewsArticle }) => (
-    <NewsCard article={item} />
-  );
+  const renderNewsItem = ({ item }: { item: NewsArticle }) => <NewsCard article={item} />;
 
-  const renderSortOption = ({ item }: { item: typeof sortOptions[0] }) => (
+  const renderSortOption = ({ item }: { item: (typeof sortOptions)[0] }) => (
     <TouchableOpacity
-      style={[
-        styles.sortChip,
-        selectedSort === item.key && styles.selectedChip
-      ]}
+      style={[styles.sortChip, selectedSort === item.key && styles.selectedChip]}
       onPress={() => handleSortChange(item.key as 'publishedAt' | 'relevancy' | 'popularity')}
     >
-      <Text style={[
-        styles.chipText,
-        selectedSort === item.key && styles.selectedChipText
-      ]}>
+      <Text style={[styles.chipText, selectedSort === item.key && styles.selectedChipText]}>
         {item.label}
       </Text>
     </TouchableOpacity>
@@ -69,9 +59,7 @@ const SearchScreen: React.FC = () => {
       return (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#EB455B" />
-          <Text style={styles.loadingText}>
-            Carregando notícias...
-          </Text>
+          <Text style={styles.loadingText}>Carregando notícias...</Text>
         </View>
       );
     }
@@ -84,9 +72,7 @@ const SearchScreen: React.FC = () => {
             Verifique sua conexão com a internet.
           </Text>
           <TouchableOpacity onPress={() => refetch()}>
-            <Text style={styles.retryText}>
-              Tentar novamente
-            </Text>
+            <Text style={styles.retryText}>Tentar novamente</Text>
           </TouchableOpacity>
         </View>
       );
@@ -96,16 +82,15 @@ const SearchScreen: React.FC = () => {
       return (
         <View style={styles.emptyContainer}>
           <Text style={styles.emptyText}>
-            {debouncedSearchQuery 
+            {debouncedSearchQuery
               ? `Nenhuma notícia encontrada para "${debouncedSearchQuery}".{'\n'}Tente usar outros termos de busca.`
-              : 'Nenhuma notícia disponível no momento.'
-            }
+              : 'Nenhuma notícia disponível no momento.'}
           </Text>
         </View>
       );
     }
 
-    const headerText = debouncedSearchQuery 
+    const headerText = debouncedSearchQuery
       ? `${data.totalResults} resultados encontrados para "${debouncedSearchQuery}"`
       : `${data.totalResults} notícias encontradas`;
 
@@ -116,11 +101,7 @@ const SearchScreen: React.FC = () => {
         keyExtractor={(item, index) => `${item.url}-${index}`}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.listContent}
-        ListHeaderComponent={() => (
-          <Text style={styles.resultCount}>
-            {headerText}
-          </Text>
-        )}
+        ListHeaderComponent={() => <Text style={styles.resultCount}>{headerText}</Text>}
       />
     );
   };
@@ -257,7 +238,7 @@ const SearchScreen: React.FC = () => {
           <FlatList
             data={sortOptions}
             renderItem={renderSortOption}
-            keyExtractor={(item) => item.key}
+            keyExtractor={item => item.key}
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.sortContainer}
@@ -266,9 +247,7 @@ const SearchScreen: React.FC = () => {
       </View>
 
       {/* Content */}
-      <View style={styles.contentContainer}>
-        {renderContent()}
-      </View>
+      <View style={styles.contentContainer}>{renderContent()}</View>
     </View>
   );
 };

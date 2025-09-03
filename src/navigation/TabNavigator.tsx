@@ -26,32 +26,28 @@ const TabNavigator: React.FC = () => {
         },
       }}
     >
-      <Tab.Screen 
-        name="TopNews" 
+      <Tab.Screen
+        name="TopNews"
         component={TopNewsScreen}
-        options={{ 
+        options={{
           title: 'Top Notícias',
           tabBarIcon: ({ focused, color, size }) => (
-            <Ionicons 
-              name={focused ? 'newspaper' : 'newspaper-outline'} 
-              size={size} 
-              color={color} 
+            <Ionicons
+              name={focused ? 'newspaper' : 'newspaper-outline'}
+              size={size}
+              color={color}
             />
-          )
+          ),
         }}
       />
-      <Tab.Screen 
-        name="Search" 
+      <Tab.Screen
+        name="Search"
         component={SearchScreen}
-        options={{ 
+        options={{
           title: 'Buscar',
           tabBarIcon: ({ focused, color, size }) => (
-            <Ionicons 
-              name={focused ? 'search' : 'search-outline'} 
-              size={size} 
-              color={color} 
-            />
-          )
+            <Ionicons name={focused ? 'search' : 'search-outline'} size={size} color={color} />
+          ),
         }}
       />
     </Tab.Navigator>

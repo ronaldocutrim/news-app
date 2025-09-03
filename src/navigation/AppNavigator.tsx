@@ -14,7 +14,11 @@ const AppNavigator: React.FC = () => {
       <Stack.Navigator initialRouteName="Splash" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="TabNavigator" component={TabNavigator} />
-        <Stack.Screen name="NewsDetail" options={{headerShown: true, title: 'Detalhes' }} component={NewsDetailScreen} />
+        <Stack.Screen
+          name="NewsDetail"
+          options={{ headerShown: true, title: 'Detalhes' }}
+          component={NewsDetailScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

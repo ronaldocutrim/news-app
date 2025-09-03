@@ -1,5 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, Linking, Share, Alert, Modal } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  Linking,
+  Share,
+  Alert,
+  Modal,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import * as Clipboard from 'expo-clipboard';
@@ -35,11 +45,9 @@ const NewsCard: React.FC<NewsCardProps> = ({ article }) => {
     setMenuVisible(false);
     try {
       await Clipboard.setStringAsync(article.url);
-      Alert.alert(
-        'Link Copiado',
-        'O link da notícia foi copiado para a área de transferência',
-        [{ text: 'OK' }]
-      );
+      Alert.alert('Link Copiado', 'O link da notícia foi copiado para a área de transferência', [
+        { text: 'OK' },
+      ]);
     } catch (error) {
       console.error('Error copying to clipboard:', error);
       Alert.alert('Erro', 'Não foi possível copiar o link');
@@ -177,52 +185,41 @@ const NewsCard: React.FC<NewsCardProps> = ({ article }) => {
   return (
     <TouchableOpacity style={styles.container} onPress={handlePress}>
       {article.urlToImage ? (
-        <Image 
-          source={{ uri: article.urlToImage }} 
-          style={styles.image}
-          resizeMode="cover"
-        />
+        <Image source={{ uri: article.urlToImage }} style={styles.image} resizeMode="cover" />
       ) : (
         <View style={styles.placeholderImage}>
           <Text style={styles.placeholderText}>Sem imagem</Text>
         </View>
       )}
-      
+
       <View style={styles.content}>
         <Text style={styles.title} numberOfLines={3}>
           {article.title}
         </Text>
-        
+
         {article.description && (
           <Text style={styles.description} numberOfLines={3}>
             {article.description}
           </Text>
         )}
-        
+
         <View style={styles.footer}>
           <View style={styles.sourceInfo}>
-            <Text style={styles.date}>
-              {formatDate(article.publishedAt)}
-            </Text>
+            <Text style={styles.date}>{formatDate(article.publishedAt)}</Text>
             <Text style={styles.separator}>•</Text>
-            <Text style={styles.source}>
-              {article.source.name}
-            </Text>
+            <Text style={styles.source}>{article.source.name}</Text>
           </View>
-          <TouchableOpacity 
-            onPress={() => setMenuVisible(true)}
-            style={styles.menuButton}
-          >
+          <TouchableOpacity onPress={() => setMenuVisible(true)} style={styles.menuButton}>
             <Text style={styles.menuIcon}>⋮</Text>
           </TouchableOpacity>
-          
+
           <Modal
             visible={menuVisible}
             transparent={true}
             animationType="fade"
             onRequestClose={() => setMenuVisible(false)}
           >
-            <TouchableOpacity 
+            <TouchableOpacity
               style={styles.modalOverlay}
               activeOpacity={1}
               onPress={() => setMenuVisible(false)}

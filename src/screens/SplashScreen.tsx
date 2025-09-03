@@ -1,10 +1,5 @@
 import React, { useEffect } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ActivityIndicator,
-} from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types';
@@ -63,7 +58,7 @@ const SplashScreen: React.FC = () => {
         <Text style={styles.title}>NewsApp</Text>
         <Text style={styles.subtitle}>Suas notícias em tempo real</Text>
       </View>
-      
+
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#FFFFFF" />
         <Text style={styles.loadingText}>Carregando...</Text>

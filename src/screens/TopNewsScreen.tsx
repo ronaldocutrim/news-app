@@ -51,9 +51,7 @@ const TopNewsScreen: React.FC = () => {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#EB455B" />
-        <Text style={{ color: '#2C2C2C', marginTop: 16 }}>
-          Carregando notícias...
-        </Text>
+        <Text style={{ color: '#2C2C2C', marginTop: 16 }}>Carregando notícias...</Text>
       </View>
     );
   }
@@ -65,10 +63,7 @@ const TopNewsScreen: React.FC = () => {
           Erro ao carregar as notícias.{'\n'}
           Verifique sua conexão com a internet.
         </Text>
-        <Text 
-          style={styles.retryText} 
-          onPress={() => refetch()}
-        >
+        <Text style={styles.retryText} onPress={() => refetch()}>
           Tentar novamente
         </Text>
       </View>
@@ -78,16 +73,12 @@ const TopNewsScreen: React.FC = () => {
   if (!data?.articles?.length) {
     return (
       <View style={styles.emptyContainer}>
-        <Text style={styles.emptyText}>
-          Nenhuma notícia encontrada.
-        </Text>
+        <Text style={styles.emptyText}>Nenhuma notícia encontrada.</Text>
       </View>
     );
   }
 
-  const renderNewsItem = ({ item }: { item: NewsArticle }) => (
-    <NewsCard article={item} />
-  );
+  const renderNewsItem = ({ item }: { item: NewsArticle }) => <NewsCard article={item} />;
 
   return (
     <View style={styles.container}>

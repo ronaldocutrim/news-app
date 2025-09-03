@@ -10,27 +10,22 @@ import {
   Share,
   ActivityIndicator,
 } from 'react-native';
-import { useRoute, useNavigation } from '@react-navigation/native';
-import { RouteProp, NavigationProp } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
+import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList, NewsArticle } from '../types';
 import { useInfiniteTopNews } from '../hooks/useInfiniteNews';
 import NewsCard from '../components/NewsCard';
 
 type NewsDetailRouteProp = RouteProp<RootStackParamList, 'NewsDetail'>;
-type NewsDetailNavigationProp = NavigationProp<RootStackParamList>;
 
 const NewsDetailScreen: React.FC = () => {
   const route = useRoute<NewsDetailRouteProp>();
-  const navigation = useNavigation<NewsDetailNavigationProp>();
   const { article } = route.params;
-  
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-  } = useInfiniteTopNews('us', 5);
+
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useInfiniteTopNews(
+    'us',
+    5
+  );
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -65,9 +60,9 @@ const NewsDetailScreen: React.FC = () => {
   };
 
   const allArticles = data?.pages.flatMap(page => page.articles) || [];
-  
-  const filteredArticles = allArticles.filter(item => 
-    item.url !== article.url && item.title !== article.title
+
+  const filteredArticles = allArticles.filter(
+    item => item.url !== article.url && item.title !== article.title
   );
 
   const renderNewsItem = ({ item }: { item: NewsArticle }) => (
@@ -89,50 +84,30 @@ const NewsDetailScreen: React.FC = () => {
   const renderHeader = () => (
     <View>
       {article.urlToImage ? (
-        <Image 
-          source={{ uri: article.urlToImage }} 
-          style={styles.image}
-          resizeMode="cover"
-        />
+        <Image source={{ uri: article.urlToImage }} style={styles.image} resizeMode="cover" />
       ) : (
         <View style={styles.placeholderImage}>
           <Text style={styles.placeholderText}>Sem imagem</Text>
         </View>
       )}
-      
+
       <View style={styles.contentContainer}>
-        <Text style={styles.title}>
-          {article.title}
-        </Text>
+        <Text style={styles.title}>{article.title}</Text>
 
         <View style={styles.metaContainer}>
-          <Text style={styles.date}>
-            {formatDate(article.publishedAt)}
-          </Text>
+          <Text style={styles.date}>{formatDate(article.publishedAt)}</Text>
           <Text style={styles.separator}>•</Text>
-          <Text style={styles.source}>
-            {article.source.name}
-          </Text>
+          <Text style={styles.source}>{article.source.name}</Text>
         </View>
 
-        {article.author && (
-          <Text style={styles.author}>
-            Por {article.author}
-          </Text>
-        )}
+        {article.author && <Text style={styles.author}>Por {article.author}</Text>}
 
-        {article.description && (
-          <Text style={styles.description}>
-            {article.description}
-          </Text>
-        )}
+        {article.description && <Text style={styles.description}>{article.description}</Text>}
 
         {article.content && (
-          <Text style={styles.content}>
-            {article.content.replace(/\[\+\d+ chars\]/, '...')}
-          </Text>
+          <Text style={styles.content}>{article.content.replace(/\[\+\d+ chars\]/, '...')}</Text>
         )}
-        
+
         <Text style={styles.relatedTitle}>Outras notícias</Text>
       </View>
     </View>
@@ -273,9 +248,7 @@ const NewsDetailScreen: React.FC = () => {
     return (
       <View style={[styles.container, { justifyContent: 'center', alignItems: 'center' }]}>
         <ActivityIndicator size="large" color="#EB455B" />
-        <Text style={{ color: '#2C2C2C', marginTop: 16 }}>
-          Carregando...
-        </Text>
+        <Text style={{ color: '#2C2C2C', marginTop: 16 }}>Carregando...</Text>
       </View>
     );
   }
@@ -295,7 +268,7 @@ const NewsDetailScreen: React.FC = () => {
       />
 
       <View style={styles.actionsContainer}>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={[styles.actionButton, styles.actionButtonSecondary]}
           onPress={handleShare}
         >
@@ -303,14 +276,9 @@ const NewsDetailScreen: React.FC = () => {
             Compartilhar
           </Text>
         </TouchableOpacity>
-        
-        <TouchableOpacity 
-          style={styles.actionButton}
-          onPress={handleOpenOriginal}
-        >
-          <Text style={styles.actionButtonText}>
-            Ler Original
-          </Text>
+
+        <TouchableOpacity style={styles.actionButton} onPress={handleOpenOriginal}>
+          <Text style={styles.actionButtonText}>Ler Original</Text>
         </TouchableOpacity>
       </View>
     </View>

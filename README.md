@@ -79,12 +79,14 @@ npm run web
 ## Estrutura das Telas
 
 ### Top Notícias
+
 - Lista das principais notícias
 - Pull to refresh
 - Cards com imagem, título, descrição e fonte
 - Tap para abrir notícia no navegador
 
 ### Busca
+
 - Campo de busca
 - Filtros por:
   - Ordenação (mais recentes, relevância, popularidade)
@@ -95,6 +97,7 @@ npm run web
 ## Temas
 
 O aplicativo suporta dois temas:
+
 - **Modo Claro**: Interface clara e limpa
 - **Modo Escuro**: Interface escura para melhor visualização noturna
 
@@ -103,25 +106,32 @@ O tema é persistido localmente e restaurado quando o app é reaberto.
 ## Componentes Principais
 
 ### NewsCard
+
 Componente reutilizável para exibir notícias com:
+
 - Imagem da notícia (com placeholder se não disponível)
 - Título da notícia
 - Descrição
 - Fonte e data de publicação
 
 ### ThemeSwitcher
+
 Botão simples com ícone de sol/lua para alternar entre temas.
 
 ## ViewModels (React Query)
 
 ### useTopNews
+
 Hook customizado para buscar top notícias:
+
 - Cache de 5 minutos
 - Retry automático em caso de erro
 - Suporte a pull to refresh
 
 ### useSearchNews
+
 Hook customizado para busca de notícias:
+
 - Ativado apenas quando há termo de busca
 - Cache de 5 minutos
 - Suporte a filtros avançados
