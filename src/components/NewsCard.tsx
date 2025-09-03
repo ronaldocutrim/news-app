@@ -1,5 +1,7 @@
-import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, Linking } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Image, TouchableOpacity, StyleSheet, Linking, Share, Alert } from 'react-native';
+import { Menu, IconButton } from 'react-native-paper';
+import * as Clipboard from 'expo-clipboard';
 import { useTheme } from '../contexts/ThemeContext';
 import { NewsArticle } from '../types';
 
@@ -9,8 +11,41 @@ interface NewsCardProps {
 
 const NewsCard: React.FC<NewsCardProps> = ({ article }) => {
   const { theme } = useTheme();
+  const [menuVisible, setMenuVisible] = useState(false);
 
   const handlePress = () => {
+    Linking.openURL(article.url);
+  };
+
+  const handleShare = async () => {
+    setMenuVisible(false);
+    try {
+      await Share.share({
+        message: `${article.title}\n\n${article.url}`,
+        title: article.title,
+      });
+    } catch (error) {
+      console.error('Error sharing:', error);
+    }
+  };
+
+  const handleCopyLink = async () => {
+    setMenuVisible(false);
+    try {
+      await Clipboard.setStringAsync(article.url);
+      Alert.alert(
+        'Link Copiado',
+        'O link da notícia foi copiado para a área de transferência',
+        [{ text: 'OK' }]
+      );
+    } catch (error) {
+      console.error('Error copying to clipboard:', error);
+      Alert.alert('Erro', 'Não foi possível copiar o link');
+    }
+  };
+
+  const handleOpenExternal = () => {
+    setMenuVisible(false);
     Linking.openURL(article.url);
   };
 
@@ -46,12 +81,18 @@ const NewsCard: React.FC<NewsCardProps> = ({ article }) => {
     content: {
       padding: 16,
     },
+    header: {
+      flexDirection: 'row',
+      alignItems: 'flex-start',
+      marginBottom: 8,
+    },
     title: {
       fontSize: 18,
       fontWeight: 'bold',
       color: theme.colors.text,
-      marginBottom: 8,
       lineHeight: 24,
+      flex: 1,
+      marginRight: 8,
     },
     description: {
       fontSize: 14,
@@ -104,9 +145,39 @@ const NewsCard: React.FC<NewsCardProps> = ({ article }) => {
       )}
       
       <View style={styles.content}>
-        <Text style={styles.title} numberOfLines={3}>
-          {article.title}
-        </Text>
+        <View style={styles.header}>
+          <Text style={styles.title} numberOfLines={3}>
+            {article.title}
+          </Text>
+          <Menu
+            visible={menuVisible}
+            onDismiss={() => setMenuVisible(false)}
+            anchor={
+              <IconButton
+                icon="dots-vertical"
+                size={20}
+                onPress={() => setMenuVisible(true)}
+                iconColor={theme.colors.onSurface}
+              />
+            }
+          >
+            <Menu.Item
+              onPress={handleShare}
+              title="Compartilhar"
+              leadingIcon="share"
+            />
+            <Menu.Item
+              onPress={handleCopyLink}
+              title="Copiar link"
+              leadingIcon="content-copy"
+            />
+            <Menu.Item
+              onPress={handleOpenExternal}
+              title="Abrir no navegador"
+              leadingIcon="open-in-new"
+            />
+          </Menu>
+        </View>
         
         {article.description && (
           <Text style={styles.description} numberOfLines={3}>
