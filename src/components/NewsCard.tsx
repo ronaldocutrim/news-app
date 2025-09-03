@@ -120,7 +120,16 @@ const NewsCard: React.FC<NewsCardProps> = ({ article }) => {
       fontWeight: '600',
     },
     menuButton: {
-      margin: 0,
+      paddingHorizontal: 8,
+      paddingVertical: 4,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    menuIcon: {
+      fontSize: 16,
+      color: theme.colors.onSurface,
+      fontWeight: 'bold',
+      lineHeight: 16,
     },
     placeholderImage: {
       width: '100%',
@@ -176,29 +185,25 @@ const NewsCard: React.FC<NewsCardProps> = ({ article }) => {
             visible={menuVisible}
             onDismiss={() => setMenuVisible(false)}
             anchor={
-              <IconButton
-                icon="dots-vertical"
-                size={18}
+              <TouchableOpacity 
                 onPress={() => setMenuVisible(true)}
-                iconColor={theme.colors.onSurface}
                 style={styles.menuButton}
-              />
+              >
+                <Text style={styles.menuIcon}>⋮</Text>
+              </TouchableOpacity>
             }
           >
             <Menu.Item
               onPress={handleShare}
-              title="Compartilhar"
-              leadingIcon="share"
+              title="📤 Compartilhar"
             />
             <Menu.Item
               onPress={handleCopyLink}
-              title="Copiar link"
-              leadingIcon="content-copy"
+              title="📋 Copiar link"
             />
             <Menu.Item
               onPress={handleOpenExternal}
-              title="Abrir no navegador"
-              leadingIcon="open-in-new"
+              title="🔗 Abrir no navegador"
             />
           </Menu>
         </View>
