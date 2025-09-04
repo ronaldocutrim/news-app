@@ -39,7 +39,9 @@ export function NewsCard(props: NewsCardProps) {
           <View style={styles.sourceContainer}>
             <Text style={styles.date}>{formatDate(article.publishedAt)}</Text>
             <Text style={styles.separator}> • </Text>
-            <Text style={styles.source} numberOfLines={1}>{article.source.name}</Text>
+            <Text style={styles.source} numberOfLines={1}>
+              {article.source.name}
+            </Text>
           </View>
           <TouchableOpacity onPress={showMenu} style={styles.menuButton}>
             <FontAwesome6 name="ellipsis-vertical" size={12} color="gray" />
