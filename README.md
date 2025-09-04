@@ -60,6 +60,7 @@ npm run format     # Formata código com Prettier
 ### Desenvolvimento e Qualidade
 - **ESLint** - Análise estática de código
 - **Prettier** - Formatação automática
+- **GitHub Actions** - Pipeline de CI automatizado
 - **@sentry/react-native** - Monitoramento de erros
 
 ### UI/UX
@@ -106,7 +107,6 @@ src/
 - Analytics diferenciado por contexto
 
 ## 🚧 Melhorias Futuras
+- [ ] **CD Pipeline** - Deploy automático com GitHub Actions
 - [ ] **Testing** - Implementar testes unitários, integração e E2E
 - [ ] **Performance Optimization** - Code splitting, otimização de imagens e bundle
-- [ ] **Design System** - Componentes reutilizáveis e estilização
-- [ ] **Desacoplamento de Recursos** - Módulos de domínio separados
