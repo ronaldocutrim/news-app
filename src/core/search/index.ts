@@ -1,5 +1,5 @@
 // Search Core Module
-export * from './model/SearchService';
+export * from './service/SearchService';
 export * from './viewmodel/SearchViewModel';
 
 // Views

@@ -1,5 +1,5 @@
 export { FeedListScreen } from './view/FeedListScreen';
-export { NewsService } from './model/NewsService';
+export { NewsService } from './service/NewsService';
 export { useTopNewsViewModel, useNewsListViewModel } from './viewmodel/FeedViewModel';
 export { FeedListView } from './view/FeedListView';
 export { FeedNewsCardItem } from './components/FeedNewsCardItem';

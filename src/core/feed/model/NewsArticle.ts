@@ -11,9 +11,3 @@ export interface NewsArticle {
   publishedAt: string;
   content: string | null;
 }
-
-export interface NewsResponse {
-  status: string;
-  totalResults: number;
-  articles: NewsArticle[];
-}

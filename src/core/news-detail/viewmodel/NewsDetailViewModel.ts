@@ -1,13 +1,15 @@
 import { Share, Linking } from 'react-native';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { NewsService } from '../../feed/model/NewsService';
+import { serviceContainer } from '../../shared/services';
 import { NewsArticle } from '../../feed/model/NewsArticle';
 
 export const useNewsDetailViewModel = (article: NewsArticle) => {
+  const newsService = serviceContainer.getNewsService();
+  
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, error } =
     useInfiniteQuery({
       queryKey: ['relatedNews', article.source.name],
-      queryFn: ({ pageParam = 1 }) => NewsService.getTopHeadlines('us', 10, pageParam),
+      queryFn: ({ pageParam = 1 }) => newsService.getTopHeadlines('us', 10, pageParam),
       getNextPageParam: (lastPage, allPages) => {
         const totalLoaded = allPages.reduce((acc, page) => acc + page.articles.length, 0);
         return totalLoaded < lastPage.totalResults ? allPages.length + 1 : undefined;

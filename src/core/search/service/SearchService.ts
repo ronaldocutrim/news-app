@@ -1,5 +1,5 @@
 import { HttpClient } from '../../shared/http';
-import { NewsResponse } from '../../feed/model/NewsArticle';
+import { NewsArticle } from '../../feed/model/NewsArticle';
 
 export interface SearchFilters {
   q?: string;
@@ -11,6 +11,12 @@ export interface SearchFilters {
   sortBy?: 'relevancy' | 'popularity' | 'publishedAt';
   pageSize: number;
   page: number;
+}
+
+export interface NewsResponse {
+  status: string;
+  totalResults: number;
+  articles: NewsArticle[];
 }
 
 export class SearchService {

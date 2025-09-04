@@ -1,13 +1,17 @@
-import { SearchFilters, SearchService } from '@core/search';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { SearchFilters, SearchService } from './SearchService';
+import { AxiosHttpClient } from '@core/shared';
 
 export const useSearchNewsService = (
   filters: Omit<SearchFilters, 'page'>,
   enabled: boolean = false
 ) => {
+  const httpClient = new AxiosHttpClient();
+  const searchService = new SearchService(httpClient);
+
   return useInfiniteQuery({
     queryKey: ['searchNewsInfinite', filters.q, filters.sortBy, filters.pageSize],
-    queryFn: ({ pageParam = 1 }) => SearchService.searchNews({ ...filters, page: pageParam }),
+    queryFn: ({ pageParam = 1 }) => searchService.searchNews({ ...filters, page: pageParam }),
     enabled: enabled && !!filters.q,
     getNextPageParam: (lastPage, allPages) => {
       const pageSize = filters.pageSize;

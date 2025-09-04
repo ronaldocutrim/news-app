@@ -1,5 +1,11 @@
 import { HttpClient } from '../../shared/http';
-import { NewsResponse } from './NewsArticle';
+import { NewsArticle } from '../model/NewsArticle';
+
+export interface NewsResponse {
+  status: string;
+  totalResults: number;
+  articles: NewsArticle[];
+}
 
 export class NewsService {
   constructor(private httpClient: HttpClient) {}
@@ -13,14 +19,6 @@ export class NewsService {
       country,
       pageSize,
       page,
-    });
-  }
-
-  async getNewsByCategory(category: string, pageSize: number = 20): Promise<NewsResponse> {
-    return await this.httpClient.get<NewsResponse>('/top-headlines', {
-      category,
-      country: 'us',
-      pageSize,
     });
   }
 }
