@@ -17,10 +17,14 @@ git clone <repository-url>
 cd news-app
 npm install
 
-# 2. Iniciar o projeto
+# 2. Configurar variáveis de ambiente
+cp .env.example .env
+# Edite o arquivo .env e adicione sua chave da News API
+
+# 3. Iniciar o projeto
 npm start
 
-# 3. Escolher plataforma
+# 4. Escolher plataforma
 # - Pressione 'a' para Android
 # - Pressione 'i' para iOS  
 # - Pressione 'w' para Web
