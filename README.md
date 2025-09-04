@@ -107,6 +107,8 @@ src/
 - Analytics diferenciado por contexto
 
 ## 🚧 Melhorias Futuras
+- [ ] **Design System** - Componentes reutilizáveis e estilização
+- [ ] **Desacoplamento de Recursos** - Inverter a dependência entre componentes para aumentar testabilidade.
 - [ ] **CD Pipeline** - Deploy automático com GitHub Actions
 - [ ] **Testing** - Implementar testes unitários, integração e E2E
 - [ ] **Performance Optimization** - Code splitting, otimização de imagens e bundle
