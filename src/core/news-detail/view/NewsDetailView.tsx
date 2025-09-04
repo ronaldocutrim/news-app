@@ -28,7 +28,6 @@ export const NewsDetailView: React.FC<NewsDetailViewProps> = ({
 }) => {
   const renderHeader = () => (
     <View style={styles.headerContainer}>
-      
       {article.urlToImage ? (
         <View style={styles.heroImageContainer}>
           <Image source={{ uri: article.urlToImage }} style={styles.heroImage} resizeMode="cover" />
@@ -40,17 +39,13 @@ export const NewsDetailView: React.FC<NewsDetailViewProps> = ({
         </View>
       )}
 
-      
       <View style={styles.contentContainer}>
-        
         <View style={styles.sourceBadge}>
           <Text style={styles.sourceBadgeText}>{article.source.name}</Text>
         </View>
 
-        
         <Text style={styles.title}>{article.title}</Text>
 
-        
         <View style={styles.metaContainer}>
           <View style={styles.metaRow}>
             <Text style={styles.metaText}>📅 {formattedDate}</Text>
@@ -62,14 +57,12 @@ export const NewsDetailView: React.FC<NewsDetailViewProps> = ({
           )}
         </View>
 
-        
         {article.description && (
           <View style={styles.descriptionContainer}>
             <Text style={styles.description}>{article.description}</Text>
           </View>
         )}
 
-        
         {article.content && (
           <View style={styles.articleContentContainer}>
             <Text style={styles.articleContent}>
@@ -78,7 +71,6 @@ export const NewsDetailView: React.FC<NewsDetailViewProps> = ({
           </View>
         )}
 
-        
         <View style={styles.actionButtonsContainer}>
           <TouchableOpacity style={styles.actionButton} onPress={onShare}>
             <Text style={styles.actionButtonIcon}>📤</Text>

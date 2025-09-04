@@ -7,7 +7,7 @@ import { NewsArticle } from '../../feed/model/NewsArticle';
 export const useNewsDetailViewModel = (article: NewsArticle) => {
   const httpClient = new AxiosHttpClient();
   const newsService = new FeedNewsService(httpClient);
-  
+
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, error } =
     useInfiniteQuery({
       queryKey: ['relatedNews', article.source.name],
