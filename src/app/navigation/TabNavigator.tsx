@@ -1,9 +1,9 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import { TabParamList } from '../types';
-import TopNewsScreen from '../screens/TopNewsScreen';
-import SearchScreen from '../screens/SearchScreen';
+import { TabParamList } from '@utils/routes';
+import { FeedListScreen } from '../feed';
+import { SearchScreen } from '../search';
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
@@ -28,7 +28,7 @@ const TabNavigator: React.FC = () => {
     >
       <Tab.Screen
         name="TopNews"
-        component={TopNewsScreen}
+        component={FeedListScreen}
         options={{
           title: 'Top Notícias',
           tabBarIcon: ({ focused, color, size }) => (

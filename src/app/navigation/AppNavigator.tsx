@@ -1,10 +1,10 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../types';
+import { RootStackParamList } from '@utils/routes';
 import TabNavigator from './TabNavigator';
-import NewsDetailScreen from '../screens/NewsDetailScreen';
-import SplashScreen from '../screens/SplashScreen';
+import { NewsDetailScreen } from '../news-detail';
+import SplashScreen from '../../../SplashScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
