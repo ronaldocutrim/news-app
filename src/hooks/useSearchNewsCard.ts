@@ -3,7 +3,7 @@ import { Share, Linking } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { NewsArticle } from '@/core/feed/model/NewsArticle';
-import { NewsCardProps } from '../components/NewsCardProps';
+import { NewsCardProps } from '@/components/NewsCardProps';
 import { RootStackParamList } from '@utils/routes';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;

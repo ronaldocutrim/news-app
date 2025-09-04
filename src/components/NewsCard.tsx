@@ -36,12 +36,12 @@ export function NewsCard(props: NewsCardProps) {
           </Text>
         )}
         <View style={styles.footer}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={styles.sourceContainer}>
             <Text style={styles.date}>{formatDate(article.publishedAt)}</Text>
-            <Text> • </Text>
-            <Text style={styles.source}>{article.source.name}</Text>
+            <Text style={styles.separator}> • </Text>
+            <Text style={styles.source} numberOfLines={1}>{article.source.name}</Text>
           </View>
-          <TouchableOpacity onPress={showMenu} style={{ padding: 16 }}>
+          <TouchableOpacity onPress={showMenu} style={styles.menuButton}>
             <FontAwesome6 name="ellipsis-vertical" size={12} color="gray" />
           </TouchableOpacity>
         </View>
@@ -127,14 +127,32 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  sourceContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+    marginRight: 8,
+  },
   source: {
     fontSize: 12,
     color: '#EB455B',
     fontWeight: '600',
+    flex: 1,
   },
   date: {
     fontSize: 12,
     color: '#8C8E90',
+    flexShrink: 0,
+  },
+  separator: {
+    fontSize: 12,
+    color: '#8C8E90',
+    marginHorizontal: 4,
+    flexShrink: 0,
+  },
+  menuButton: {
+    padding: 16,
+    marginLeft: 8,
   },
   modalOverlay: {
     flex: 1,
