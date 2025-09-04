@@ -2,6 +2,13 @@
 
 Aplicativo moderno de notícias desenvolvido com React Native/Expo, implementando arquitetura limpa e padrões avançados de desenvolvimento.
 
+## 📱 Screenshots
+
+<div style="display: flex; gap: 10px;">
+  <img src="docs/images/feed.png" alt="Feed Screen" width="300"/>
+  <img src="docs/images/buscar.png" alt="App Screenshot" width="300"/>
+</div>
+
 ## 🚀 Como Executar o Projeto
 
 ### Pré-requisitos
@@ -82,9 +89,6 @@ src/
 │   ├── feed/               # Domínio do feed de notícias
 │   ├── search/             # Domínio de busca
 │   ├── news-detail/        # Domínio de detalhes
-│   └── shared/             # Recursos compartilhados
-│       ├── http/           # Cliente HTTP abstrato
-│       └── services/       # Container de dependências
 ├── components/             # Componentes UI reutilizáveis
 ├── hooks/                  # Custom hooks específicos
 ├── utils/                  # Utilitários e configurações
