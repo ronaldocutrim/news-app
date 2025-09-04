@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { NewsArticle } from '../../feed/model/NewsArticle';
 import { SearchNewsCardItem } from '@core/search/components/SearchNewsCardItem';
-import { useSearchScreenViewModel } from '@core/search';
+import { useSearchScreenViewModel } from '@core/search/viewmodel/SearchViewModel';
 
 type SearchViewProps = {} & ReturnType<typeof useSearchScreenViewModel>;
 
@@ -109,7 +109,6 @@ export function SearchView(props: SearchViewProps) {
 
   return (
     <View style={styles.container}>
-      {/* Search Header */}
       <View style={styles.searchContainer}>
         <TextInput
           style={styles.searchInput}
@@ -120,7 +119,6 @@ export function SearchView(props: SearchViewProps) {
           placeholderTextColor="#8C8E90"
         />
 
-        {/* Sort Filters */}
         <View style={styles.filtersContainer}>
           <Text style={styles.filtersLabel}>Ordenar por:</Text>
           <FlatList
@@ -134,7 +132,6 @@ export function SearchView(props: SearchViewProps) {
         </View>
       </View>
 
-      {/* Content */}
       <View style={styles.contentContainer}>{renderContent()}</View>
     </View>
   );

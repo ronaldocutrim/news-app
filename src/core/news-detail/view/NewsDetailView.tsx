@@ -28,7 +28,7 @@ export const NewsDetailView: React.FC<NewsDetailViewProps> = ({
 }) => {
   const renderHeader = () => (
     <View style={styles.headerContainer}>
-      {/* Hero Image */}
+      
       {article.urlToImage ? (
         <View style={styles.heroImageContainer}>
           <Image source={{ uri: article.urlToImage }} style={styles.heroImage} resizeMode="cover" />
@@ -40,17 +40,17 @@ export const NewsDetailView: React.FC<NewsDetailViewProps> = ({
         </View>
       )}
 
-      {/* Article Content */}
+      
       <View style={styles.contentContainer}>
-        {/* Category/Source Badge */}
+        
         <View style={styles.sourceBadge}>
           <Text style={styles.sourceBadgeText}>{article.source.name}</Text>
         </View>
 
-        {/* Title */}
+        
         <Text style={styles.title}>{article.title}</Text>
 
-        {/* Metadata Row */}
+        
         <View style={styles.metaContainer}>
           <View style={styles.metaRow}>
             <Text style={styles.metaText}>📅 {formattedDate}</Text>
@@ -62,14 +62,14 @@ export const NewsDetailView: React.FC<NewsDetailViewProps> = ({
           )}
         </View>
 
-        {/* Description */}
+        
         {article.description && (
           <View style={styles.descriptionContainer}>
             <Text style={styles.description}>{article.description}</Text>
           </View>
         )}
 
-        {/* Content */}
+        
         {article.content && (
           <View style={styles.articleContentContainer}>
             <Text style={styles.articleContent}>
@@ -78,7 +78,7 @@ export const NewsDetailView: React.FC<NewsDetailViewProps> = ({
           </View>
         )}
 
-        {/* Action Buttons Row */}
+        
         <View style={styles.actionButtonsContainer}>
           <TouchableOpacity style={styles.actionButton} onPress={onShare}>
             <Text style={styles.actionButtonIcon}>📤</Text>

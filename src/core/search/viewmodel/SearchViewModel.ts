@@ -32,7 +32,6 @@ export const useSearchScreenViewModel = () => {
     isFetchingNextPage,
   } = useSearchNewsService(filters, true);
 
-  // Flatten all pages into a single array of articles
   const data = useMemo(() => {
     if (!infiniteData?.pages?.length) return null;
 

@@ -1,7 +1,4 @@
-// Search Core Module
-export * from './service/SearchService';
-export * from './viewmodel/SearchViewModel';
-
-// Views
-export { SearchScreen } from './view/SearchScreen';
-export { SearchView } from './view/SearchView';
+export * from './view/SearchScreen';
+export { SearchService, type SearchFilters } from './service/SearchService';
+export { useSearchNewsService } from './service/useSearchNewsService';
+export { useSearchScreenViewModel } from './viewmodel/SearchViewModel';

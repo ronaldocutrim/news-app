@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { NewsService } from '@core/feed';
-import { AxiosHttpClient } from '@core/shared';
+import { AxiosHttpClient } from '@/contracts/http';
+import { FeedNewsService } from '@core/feed';
 
 export interface FeedFilters {
   country?: string;
@@ -10,7 +10,7 @@ export interface FeedFilters {
 export const useFeedNewsService = (filters: FeedFilters = {}) => {
   const { country = 'us', pageSize = 20 } = filters;
   const httpClient = new AxiosHttpClient();
-  const newsService = new NewsService(httpClient);
+  const newsService = new FeedNewsService(httpClient);
 
   return useQuery({
     queryKey: ['topHeadlines', country, pageSize],

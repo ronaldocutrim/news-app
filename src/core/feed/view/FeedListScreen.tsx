@@ -1,7 +1,6 @@
 import React from 'react';
 import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
-import { FeedListView } from './FeedListView';
-import { useNewsListViewModel } from '../viewmodel/FeedViewModel';
+import { FeedListView, useNewsListViewModel } from '@core/feed';
 
 export const FeedListScreen: React.FC = () => {
   const { articles, isLoading, error, isRefetching, onRefresh } = useNewsListViewModel();

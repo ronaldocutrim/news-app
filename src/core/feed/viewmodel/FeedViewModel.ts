@@ -1,11 +1,7 @@
-import { useFeedNewsService, FeedFilters } from '../service';
-
-export const useTopNewsViewModel = (filters: FeedFilters = {}) => {
-  return useFeedNewsService(filters);
-};
+import { useFeedNewsService } from '../service';
 
 export const useNewsListViewModel = () => {
-  const { data, isLoading, error, refetch, isRefetching } = useTopNewsViewModel();
+  const { data, isLoading, error, refetch, isRefetching } = useFeedNewsService();
 
   const articles = data?.articles || [];
 

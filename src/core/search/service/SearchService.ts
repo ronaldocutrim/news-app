@@ -1,4 +1,4 @@
-import { HttpClient } from '../../shared/http';
+import { HttpClient } from '../../../contracts/http';
 import { NewsArticle } from '../../feed/model/NewsArticle';
 
 export interface SearchFilters {

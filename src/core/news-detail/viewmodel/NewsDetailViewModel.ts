@@ -1,10 +1,12 @@
 import { Share, Linking } from 'react-native';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { serviceContainer } from '../../shared/services';
+import { FeedNewsService } from '@core/feed';
+import { AxiosHttpClient } from '@/contracts/http';
 import { NewsArticle } from '../../feed/model/NewsArticle';
 
 export const useNewsDetailViewModel = (article: NewsArticle) => {
-  const newsService = serviceContainer.getNewsService();
+  const httpClient = new AxiosHttpClient();
+  const newsService = new FeedNewsService(httpClient);
   
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, error } =
     useInfiniteQuery({
@@ -48,7 +50,6 @@ export const useNewsDetailViewModel = (article: NewsArticle) => {
     }
   };
 
-  // Load more related articles
   const loadMoreRelated = () => {
     if (hasNextPage && !isFetchingNextPage) {
       fetchNextPage();

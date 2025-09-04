@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { SearchFilters, SearchService } from './SearchService';
-import { AxiosHttpClient } from '@core/shared';
+import { SearchFilters, SearchService } from '@core/search';
+import { AxiosHttpClient } from '@/contracts/http';
 
 export const useSearchNewsService = (
   filters: Omit<SearchFilters, 'page'>,

@@ -7,7 +7,7 @@ export interface NewsResponse {
   articles: NewsArticle[];
 }
 
-export class NewsService {
+export class FeedNewsService {
   constructor(private httpClient: HttpClient) {}
 
   async getTopHeadlines(

@@ -1,7 +1,6 @@
-export { FeedListScreen } from './view/FeedListScreen';
-export { NewsService } from './service/NewsService';
-export { useTopNewsViewModel, useNewsListViewModel } from './viewmodel/FeedViewModel';
+export * from './view/FeedListScreen';
+export { FeedNewsService } from './service/FeedNewsService';
 export { FeedListView } from './view/FeedListView';
-export { FeedNewsCardItem } from './components/FeedNewsCardItem';
-export { useFeedNewsService } from './service';
-export type { FeedFilters } from './service';
+export { useNewsListViewModel } from './viewmodel/FeedViewModel';
+export { useFeedNewsService } from './service/useFeedNewsService';
+export type { FeedFilters } from './service/useFeedNewsService';
