@@ -1,5 +1,7 @@
+import { NewsArticle } from './NewsArticle';
+
 export interface FeedState {
-  articles: any[];
+  articles: NewsArticle[];
   isLoading: boolean;
   error?: string;
 }

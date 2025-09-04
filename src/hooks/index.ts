@@ -1,2 +1,2 @@
-// NewsCard Hook
-export { useNewsCard } from './useNewsCard';
+export { useFeedNewsCard } from './useFeedNewsCard';
+export { useSearchNewsCard } from './useSearchNewsCard';

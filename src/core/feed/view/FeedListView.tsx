@@ -6,7 +6,7 @@ import { FeedNewsCardItem } from '@core/feed/components/FeedNewsCardItem';
 interface NewsListViewProps {
   articles: NewsArticle[];
   isLoading: boolean;
-  error: any;
+  error: Error | null;
   isRefetching: boolean;
   onRefresh: () => void;
 }

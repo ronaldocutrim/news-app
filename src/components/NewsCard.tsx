@@ -1,12 +1,7 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, Modal, StyleSheet } from 'react-native';
-import { NewsArticle } from '@/core/feed/model/NewsArticle';
-import { useNewsCard } from '@/hooks';
+import { NewsCardProps } from './NewsCardProps';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
-
-type NewsCardProps = {
-  article: NewsArticle;
-} & ReturnType<typeof useNewsCard>;
 
 export function NewsCard(props: NewsCardProps) {
   const {

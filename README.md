@@ -142,15 +142,68 @@ npm run code:fix
 
 ## Componentes Principais
 
-### NewsCard
+### NewsCard - Arquitetura de Desacoplamento por Contexto
 
-Componente reutilizável para exibir notícias com:
+**CRÍTICO PARA ESCALA**: O NewsCard implementa desacoplamento no nível de hook, não de componente.
 
-- Imagem da notícia (com placeholder se não disponível)
-- Título da notícia
-- Descrição
-- Fonte e data de publicação
-- Navegação para tela de detalhes ao ser tocado
+#### Estrutura:
+- **1 Componente Visual**: `src/components/NewsCard.tsx`
+- **1 Interface**: `src/components/NewsCardProps.ts`  
+- **N Hooks por Contexto**: `src/hooks/use{Context}NewsCard.ts`
+
+#### Hooks Específicos por Contexto:
+
+**`useFeedNewsCard`** - Para listas do feed principal:
+- Data: Formato padrão `DD/MM/YYYY`
+- Analytics: `feed_main` context
+- Compartilhamento: Contexto "feed principal"
+
+**`useSearchNewsCard`** - Para resultados de busca:
+- Data: Formato relativo `2h atrás`, `3d atrás`
+- Analytics: `search_results` context  
+- Compartilhamento: Contexto "resultados de busca"
+
+#### Benefícios para Escala:
+- ✅ **1 Visual, N Lógicas**: Mantém UI consistente com comportamentos específicos
+- ✅ **Fácil Extensão**: Novos contextos = novo hook (ex: `useFavoritesNewsCard`)
+- ✅ **Analytics Diferenciado**: Tracking específico por contexto
+- ✅ **Formatações Específicas**: Data relativa vs padrão por contexto
+- ✅ **Zero Duplicação**: Reutilização total do componente visual
+
+#### Uso:
+```tsx
+// Feed
+const feedProps = useFeedNewsCard(article);
+return <NewsCard {...feedProps} />;
+
+// Search  
+const searchProps = useSearchNewsCard(article);
+return <NewsCard {...searchProps} />;
+```
+
+#### Pontos de Melhoria - Analytics:
+
+**IMPLEMENTAÇÃO ATUAL**: Sem analytics - focado na funcionalidade core.
+
+**FUTURAS MELHORIAS PARA ANALYTICS**:
+- 🎯 **Analytics Plugável**: Adicionar analytics via provider pattern
+- 🎯 **Event Builder**: Factory para padronizar eventos por contexto  
+- 🎯 **Multi-Provider**: Suporte simultâneo Firebase + Segment + Custom
+- 🎯 **Type Safety**: Eventos tipados por contexto
+
+**Implementação Ideal Futura**:
+```tsx
+// Hook genérico opcional
+const analytics = useAnalytics(); // undefined se não configurado
+analytics?.track('article_clicked', { context: 'feed_main' });
+
+// Provider opcional
+<AnalyticsProvider provider={segment}>
+  <App />
+</AnalyticsProvider>
+```
+
+Mantém o app funcional sem analytics, mas permite adição fácil quando necessário.
 
 ## Hooks Customizados (React Query)
 

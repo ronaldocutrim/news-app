@@ -9,7 +9,7 @@ import {
   ScrollView,
 } from 'react-native';
 
-import { NewsArticle } from '@core/feed';
+import { NewsArticle } from '@core/feed/model/NewsArticle';
 
 export interface NewsDetailViewProps {
   article: NewsArticle;
