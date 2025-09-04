@@ -9,43 +9,39 @@ Aplicativo moderno de notícias desenvolvido com React Native/Expo, implementand
   <img src="docs/images/buscar.png" alt="App Screenshot" width="300"/>
 </div>
 
-## 🚀 Como Executar o Projeto
+## 🚀 Como Rodar
 
-### Pré-requisitos
-- Node.js 18+ 
-- npm ou yarn
-- Expo CLI: `npm install -g @expo/cli`
-
-### Passos para Rodar
-
+#### 1️⃣ Baixar o projeto
 ```bash
-# 1. Clonar e instalar dependências
-git clone <repository-url>
+git clone git@github.com:ronaldocutrim/news-app.git
 cd news-app
-npm install
-
-# 2. Configurar variáveis de ambiente
-cp .env.example .env
-# Edite o arquivo .env e adicione sua chave da News API
-
-# 3. Iniciar o projeto
-npm start
-
-# 4. Escolher plataforma
-# - Pressione 'a' para Android
-# - Pressione 'i' para iOS  
-# - Pressione 'w' para Web
 ```
 
-### Scripts Disponíveis
-
+#### 2️⃣ Instalar as dependências
 ```bash
-npm start          # Inicia o Expo Dev Server
-npm run android    # Roda no Android
-npm run ios        # Roda no iOS
-npm run web        # Roda no navegador
-npm run lint       # Verifica ESLint
-npm run format     # Formata código com Prettier
+npm install
+```
+
+#### 3️⃣ Configurar a chave da API
+```bash
+# Copiar o arquivo de exemplo
+cp .env.example .env
+```
+Adicionei minha chave ao env example para facilitar, mas se preferir coloque sua chave da News API (você pode criar uma grátis em https://newsapi.org)
+
+#### 4️⃣ Rodar o app
+```bash
+npm start
+```
+
+Depois que rodar, vai aparecer um QR code no terminal. Você pode:
+- **No celular**: Baixar o app Expo Go e escanear o QR code
+- **Emulador**: Apertar `a` para Android ou `i` para iOS
+
+### Comandos úteis
+```bash
+npm start       # Roda o app
+npm run lint    # Verifica se o código está ok
 ```
 
 ## 📚 Tecnologias e Bibliotecas
