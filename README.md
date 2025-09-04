@@ -102,37 +102,7 @@ src/
 - Analytics diferenciado por contexto
 
 ## 🚧 Melhorias Futuras
-
-### Performance
-- [ ] **Code Splitting** - Lazy loading de módulos
-- [ ] **Image Optimization** - WebP, lazy loading, cache
-- [ ] **Bundle Analysis** - Otimização do tamanho do app
-- [ ] **Memory Management** - Profiling e otimização
-
-### Funcionalidades
-- [ ] **Offline Support** - Cache local e sincronização
-- [ ] **Push Notifications** - Notícias breaking news
-- [ ] **Favoritos** - Persistência local de artigos
-- [ ] **Categorias** - Filtros por tópico (tech, sports, etc)
-- [ ] **Dark Mode** - Tema escuro
-- [ ] **Internacionalização** - Suporte multi-idiomas
-
-### Arquitetura
-- [ ] **Micro-frontends** - Módulos independentes
-- [ ] **State Management** - Zustand ou Redux Toolkit
-- [ ] **Error Boundaries** - Recuperação de erros elegante
-- [ ] **Analytics Abstraction** - Provider pattern plugável
-- [ ] **Testing** - Unit, Integration e E2E tests
-- [ ] **CI/CD** - Pipeline automático de deploy
-
-### Developer Experience
-- [ ] **Storybook** - Documentação de componentes
-- [ ] **Husky** - Git hooks para qualidade
-- [ ] **Conventional Commits** - Padronização de commits
-- [ ] **Release Automation** - Semantic versioning
-
-### Monitoramento
-- [ ] **Performance Monitoring** - Flipper integration
-- [ ] **Crash Reporting** - Sentry configuração completa
-- [ ] **Analytics Dashboard** - Métricas de uso
-- [ ] **A/B Testing** - Experimentos controlados
+- [ ] **Testing** - Implementar testes unitários, integração e E2E
+- [ ] **Performance Optimization** - Code splitting, otimização de imagens e bundle
+- [ ] **Design System** - Componentes reutilizáveis e estilização
+- [ ] **Desacoplamento de Recursos** - Módulos de domínio separados
