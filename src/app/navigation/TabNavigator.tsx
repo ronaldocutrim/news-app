@@ -2,8 +2,8 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { TabParamList } from '@utils/routes';
-import { FeedListScreen } from '../feed';
-import { SearchScreen } from '../search';
+import { FeedListScreen } from '@core/feed';
+import { SearchScreen } from '@core/search';
 
 const Tab = createBottomTabNavigator<TabParamList>();
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { StatusBar } from 'expo-status-bar';
-import AppNavigator from './src/core/navigation/AppNavigator';
+import AppNavigator from '@/app/navigation/AppNavigator';
 
 const queryClient = new QueryClient({
   defaultOptions: {

@@ -1,189 +1,27 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-  Linking,
-  Share,
-  Alert,
-  Modal,
-} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import * as Clipboard from 'expo-clipboard';
-import { NewsArticle, RootStackParamList } from '../types';
+import React from 'react';
+import { View, Text, Image, TouchableOpacity, Modal, StyleSheet } from 'react-native';
+import { NewsArticle } from '@/core/feed/model/NewsArticle';
+import { useNewsCard } from '@/hooks';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
-
-interface NewsCardProps {
+type NewsCardProps = {
   article: NewsArticle;
-}
+} & ReturnType<typeof useNewsCard>;
 
-const NewsCard: React.FC<NewsCardProps> = ({ article }) => {
-  const navigation = useNavigation<NavigationProp>();
-  const [menuVisible, setMenuVisible] = useState(false);
-
-  const handlePress = () => {
-    navigation.navigate('NewsDetail', { article });
-  };
-
-  const handleShare = async () => {
-    setMenuVisible(false);
-    try {
-      await Share.share({
-        message: `${article.title}\n\n${article.url}`,
-        title: article.title,
-      });
-    } catch (error) {
-      console.error('Error sharing:', error);
-    }
-  };
-
-  const handleCopyLink = async () => {
-    setMenuVisible(false);
-    try {
-      await Clipboard.setStringAsync(article.url);
-      Alert.alert('Link Copiado', 'O link da notícia foi copiado para a área de transferência', [
-        { text: 'OK' },
-      ]);
-    } catch (error) {
-      console.error('Error copying to clipboard:', error);
-      Alert.alert('Erro', 'Não foi possível copiar o link');
-    }
-  };
-
-  const handleOpenExternal = () => {
-    setMenuVisible(false);
-    Linking.openURL(article.url);
-  };
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  };
-
-  const styles = StyleSheet.create({
-    container: {
-      backgroundColor: '#FFFFFF',
-      borderRadius: 12,
-      marginVertical: 8,
-      marginHorizontal: 16,
-      elevation: 3,
-      shadowColor: '#000000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
-    },
-    image: {
-      width: '100%',
-      height: 200,
-      borderTopLeftRadius: 12,
-      borderTopRightRadius: 12,
-    },
-    content: {
-      padding: 16,
-    },
-    title: {
-      fontSize: 18,
-      fontWeight: 'bold',
-      color: '#2C2C2C',
-      marginBottom: 8,
-      lineHeight: 24,
-    },
-    description: {
-      fontSize: 14,
-      color: '#2C2C2C',
-      marginBottom: 12,
-      lineHeight: 20,
-    },
-    footer: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginTop: 8,
-    },
-    sourceInfo: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      flex: 1,
-    },
-    date: {
-      fontSize: 12,
-      color: '#8C8E90',
-    },
-    separator: {
-      fontSize: 12,
-      color: '#8C8E90',
-      marginHorizontal: 8,
-    },
-    source: {
-      fontSize: 12,
-      color: '#EB455B',
-      fontWeight: '600',
-    },
-    menuButton: {
-      paddingHorizontal: 8,
-      paddingVertical: 4,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    menuIcon: {
-      fontSize: 16,
-      color: '#2C2C2C',
-      fontWeight: 'bold',
-      lineHeight: 16,
-    },
-    placeholderImage: {
-      width: '100%',
-      height: 200,
-      backgroundColor: '#8C8E90',
-      borderTopLeftRadius: 12,
-      borderTopRightRadius: 12,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    placeholderText: {
-      color: '#FFFFFF',
-      fontSize: 16,
-    },
-    modalOverlay: {
-      flex: 1,
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    menuModal: {
-      backgroundColor: '#FFFFFF',
-      borderRadius: 8,
-      minWidth: 200,
-      elevation: 5,
-      shadowColor: '#000000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.25,
-      shadowRadius: 4,
-    },
-    menuItem: {
-      paddingVertical: 12,
-      paddingHorizontal: 16,
-      borderBottomWidth: 1,
-      borderBottomColor: '#F0F0F0',
-    },
-    menuItemText: {
-      fontSize: 16,
-      color: '#2C2C2C',
-    },
-  });
+export function NewsCard(props: NewsCardProps) {
+  const {
+    menuVisible,
+    handlePress,
+    handleShare,
+    handleOpenOriginal,
+    formatDate,
+    showMenu,
+    hideMenu,
+    article,
+  } = props;
 
   return (
-    <TouchableOpacity style={styles.container} onPress={handlePress}>
+    <TouchableOpacity style={styles.card} onPress={handlePress}>
       {article.urlToImage ? (
         <Image source={{ uri: article.urlToImage }} style={styles.image} resizeMode="cover" />
       ) : (
@@ -202,45 +40,148 @@ const NewsCard: React.FC<NewsCardProps> = ({ article }) => {
             {article.description}
           </Text>
         )}
-
         <View style={styles.footer}>
-          <View style={styles.sourceInfo}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text style={styles.date}>{formatDate(article.publishedAt)}</Text>
-            <Text style={styles.separator}>•</Text>
+            <Text> • </Text>
             <Text style={styles.source}>{article.source.name}</Text>
           </View>
-          <TouchableOpacity onPress={() => setMenuVisible(true)} style={styles.menuButton}>
-            <Text style={styles.menuIcon}>⋮</Text>
+          <TouchableOpacity onPress={showMenu} style={{ padding: 16 }}>
+            <FontAwesome6 name="ellipsis-vertical" size={12} color="gray" />
           </TouchableOpacity>
-
-          <Modal
-            visible={menuVisible}
-            transparent={true}
-            animationType="fade"
-            onRequestClose={() => setMenuVisible(false)}
-          >
-            <TouchableOpacity
-              style={styles.modalOverlay}
-              activeOpacity={1}
-              onPress={() => setMenuVisible(false)}
-            >
-              <View style={styles.menuModal}>
-                <TouchableOpacity style={styles.menuItem} onPress={handleShare}>
-                  <Text style={styles.menuItemText}>📤 Compartilhar</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.menuItem} onPress={handleCopyLink}>
-                  <Text style={styles.menuItemText}>📋 Copiar link</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.menuItem} onPress={handleOpenExternal}>
-                  <Text style={styles.menuItemText}>🔗 Abrir no navegador</Text>
-                </TouchableOpacity>
-              </View>
-            </TouchableOpacity>
-          </Modal>
         </View>
+
+        <Modal
+          visible={menuVisible}
+          transparent={true}
+          animationType="fade"
+          onRequestClose={hideMenu}
+        >
+          <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPress={hideMenu}>
+            <View style={styles.modalContent}>
+              <TouchableOpacity style={styles.menuOption} onPress={handleShare}>
+                <Text style={styles.menuOptionText}>Compartilhar</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.menuOption} onPress={handleOpenOriginal}>
+                <Text style={styles.menuOptionText}>Abrir original</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.menuOption, styles.menuOptionLast]}
+                onPress={hideMenu}
+              >
+                <Text style={styles.cancelButtonText}>Cancelar</Text>
+              </TouchableOpacity>
+            </View>
+          </TouchableOpacity>
+        </Modal>
       </View>
     </TouchableOpacity>
   );
-};
+}
 
-export default NewsCard;
+export const styles = StyleSheet.create({
+  card: {
+    backgroundColor: '#FFFFFF',
+    marginHorizontal: 16,
+    marginVertical: 8,
+    borderRadius: 12,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+    overflow: 'hidden',
+  },
+  imageContainer: {
+    position: 'relative',
+  },
+  image: {
+    width: '100%',
+    height: 200,
+    resizeMode: 'cover',
+  },
+  placeholderImage: {
+    width: '100%',
+    height: 200,
+    backgroundColor: '#8C8E90',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  placeholderText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+  },
+  content: {
+    padding: 16,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#2C2C2C',
+    lineHeight: 22,
+    marginBottom: 8,
+  },
+  description: {
+    fontSize: 14,
+    color: '#8C8E90',
+    lineHeight: 20,
+    marginBottom: 12,
+  },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  source: {
+    fontSize: 12,
+    color: '#EB455B',
+    fontWeight: '600',
+  },
+  date: {
+    fontSize: 12,
+    color: '#8C8E90',
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    padding: 20,
+    width: '80%',
+    maxWidth: 300,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#2C2C2C',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  menuOption: {
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F0F0F0',
+  },
+  menuOptionLast: {
+    borderBottomWidth: 0,
+  },
+  menuOptionText: {
+    fontSize: 16,
+    color: '#2C2C2C',
+    textAlign: 'center',
+  },
+  cancelButton: {
+    marginTop: 10,
+    paddingVertical: 12,
+  },
+  cancelButtonText: {
+    fontSize: 16,
+    color: '#EB455B',
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+});

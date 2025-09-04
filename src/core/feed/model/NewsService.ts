@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { NewsResponse, SearchFilters } from '../types';
-import { API_CONFIG } from '../utils/config';
+import { NewsResponse } from './NewsArticle';
+import { API_CONFIG } from '../../../utils/config';
 
 const api = axios.create({
   baseURL: API_CONFIG.BASE_URL,
@@ -9,7 +9,7 @@ const api = axios.create({
   },
 });
 
-export class NewsApiService {
+export class NewsService {
   static async getTopHeadlines(
     country: string = 'us',
     pageSize: number = 20,
@@ -26,20 +26,6 @@ export class NewsApiService {
       return response.data;
     } catch (error) {
       console.error('Error fetching top headlines:', error);
-      throw error;
-    }
-  }
-
-  static async searchNews(filters: SearchFilters): Promise<NewsResponse> {
-    try {
-      const response = await api.get('/everything', {
-        params: {
-          ...filters,
-        },
-      });
-      return response.data;
-    } catch (error) {
-      console.error('Error searching news:', error);
       throw error;
     }
   }

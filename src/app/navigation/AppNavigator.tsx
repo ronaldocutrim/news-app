@@ -3,8 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@utils/routes';
 import TabNavigator from './TabNavigator';
-import { NewsDetailScreen } from '../news-detail';
-import SplashScreen from '../../../SplashScreen';
+import { NewsDetailScreen } from '@core/news-detail';
+import SplashScreen from '../SplashScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
